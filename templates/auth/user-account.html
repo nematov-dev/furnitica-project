@@ -1,0 +1,96 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}My Account{% endblock %}
+
+{% block body %}class="user-acount"{% endblock %}
+{% block content %}
+<div class="main-content">
+    <div class="wrap-banner">
+
+        <!-- breadcrumb -->
+        <nav class="breadcrumb-bg">
+            <div class="container no-index">
+                <div class="breadcrumb">
+                    <ol>
+                        <li>
+                            <a href="#">
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span>My Account</span>
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </nav>
+
+        <div class="acount head-acount">
+            <div class="container">
+                <div id="main">
+                    <h1 class="title-page">My Account</h1>
+                    <div class="content" id="block-history">
+                        <table class="std table">
+                            <tbody>
+                                <tr>
+                                    <th class="first_item">First name :</th>
+                                    <td>{{ user.first_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">Last name :</th>
+                                    <td>{{ user.last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">Username :</th>
+                                    <td>{{ user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">Email :</th>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                
+                                
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                        view Address
+                    </button>
+                    <div class="order">
+                        <h4>Order
+                            <span class="detail">History</span>
+                        </h4>
+                        {% for order in orders %}
+                            <p><strong>Order ID:</strong> #{{ order.id }}</p>
+                            <p><strong>Total Products:</strong> {{ order.total_products }}</p>
+                            <p><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+                            <p><strong>Status:</strong> {{ order.status }}</p>
+                            <hr>
+                            <p></p>
+                        {% empty %}
+                            <p>You have no orders yet.</p>
+                            
+                        {% endfor %}
+                        <h4>Products
+                            <span class="detail">History</span>
+                        </h4>
+                        {% for order in orders %}
+                            {% for item in order.items.all %}
+                                <p> <img  width="100px" src="{{ item.product.image1.url }}" alt=""> Name: {{ item.product_title }} | Quantity: {{ item.product_quantity }} | Price: (${{ item.product_price }})</p>
+                            {% endfor %}
+                            {% empty %}
+                            <p>You have no orders yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
